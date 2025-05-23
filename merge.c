@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<stdbool.h>
 
+/*오름차순으로 정렬된 리스트 2개를 다시 오름차순으로 정렬된 리스트로 합쳐주는 merge함수. 시간 복잡도: O(n+m) 이유는 n과 m은 각 리스트의 길이*/
 typedef struct ListNode{
 	struct ListNode* link;
 	int data;
@@ -38,7 +39,7 @@ void insert_last(ListType* plist, int data) {
 	plist->size++;
 }
 
-void merge(ListType* plist1, ListType* plist2, ListType* plist3) {   //1�� 2�� ���ؼ� 3�� ������������ �ִ´�.
+void merge(ListType* plist1, ListType* plist2, ListType* plist3) {   //1과 2를 비교해서 3에 오름차순으로 넣는다.
 	ListNode* Current1 = plist1->head;
 	ListNode* Current2 = plist2->head;
 
