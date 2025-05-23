@@ -1,10 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-
+/*ë‹¨ìˆœ ì—°ê²° ë¦¬ìŠ¤íŠ¸ plist3ì„ ë‘ ê°œì˜ ë‹¨ìˆœ ì—°ê²° ë¦¬ìŠ¤íŠ¸ plist1ê³¼ plist2ë¡œ ë¶„ë¦¬í•˜ëŠ í•¨ìˆ˜ split. plist3ì˜ í™€ìˆ˜ ë²ˆì§¸ ë…¸ë“œë“¤ì€ ëª¨ë‘ plist1ë¡œ ì´ë™ë˜ê³  
+plist3ì˜ ì§ìˆ˜ ë²ˆì§¸ ë…¸ë“œë“¤ì€ ëª¨ë‘ plist2ë¡œ ì´ë™ëœë‹¤. ì´ í•¨ìˆ˜ê°€ plist3ì„ ë³€ê²½í•˜ì—¬ì„œëŠ” ì•ˆ ëœë‹¤. splití•¨ìˆ˜ ì‹œê°„ë³µìž¡ë„ : O(n)*/
 typedef struct ListNode {
-	int Â÷¼ö;
-	int °è¼ö;
+	int ì°¨ìˆ˜;
+	int ê³„ìˆ˜;
 	struct ListNode* link;
 }ListNode;
 
@@ -22,10 +23,10 @@ ListType* create() {
 	return plist;
 }
 
-void insert_last(ListType* plist, int °è¼ö, int Â÷¼ö) {
+void insert_last(ListType* plist, int ê³„ìˆ˜, int ì°¨ìˆ˜) {
 	ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
-	newNode->°è¼ö = °è¼ö;
-	newNode->Â÷¼ö = Â÷¼ö;
+	newNode->ê³„ìˆ˜ = ê³„ìˆ˜;
+	newNode->ì°¨ìˆ˜ = ì°¨ìˆ˜;
 	newNode->link = NULL;
 
 	if (plist->tail == NULL) {
@@ -45,29 +46,29 @@ void add(ListType* plist1, ListType* plist2, ListType* plist3) {
 	int sum;
 
 	while (Current1 != NULL && Current2 != NULL) {
-		if (Current1->Â÷¼ö == Current2->Â÷¼ö) {
-			sum = Current1->°è¼ö + Current2->°è¼ö;
+		if (Current1->ì°¨ìˆ˜ == Current2->ì°¨ìˆ˜) {
+			sum = Current1->ê³„ìˆ˜ + Current2->ê³„ìˆ˜;
 			if (sum != 0) {
-				insert_last(plist3, sum, Current1->Â÷¼ö);
+				insert_last(plist3, sum, Current1->ì°¨ìˆ˜);
 			}
 			Current1 = Current1->link;
 			Current2 = Current2->link;
 		}
-		else if (Current1->Â÷¼ö > Current2->Â÷¼ö) {
-			insert_last(plist3, Current1->°è¼ö, Current1->Â÷¼ö);
+		else if (Current1->ì°¨ìˆ˜ > Current2->ì°¨ìˆ˜) {
+			insert_last(plist3, Current1->ê³„ìˆ˜, Current1->ì°¨ìˆ˜);
 			Current1 = Current1->link;
 		}
-		else if (Current1->Â÷¼ö < Current2->Â÷¼ö) {
-			insert_last(plist3, Current2->°è¼ö, Current2->Â÷¼ö);
+		else if (Current1->ì°¨ìˆ˜ < Current2->ì°¨ìˆ˜) {
+			insert_last(plist3, Current2->ê³„ìˆ˜, Current2->ì°¨ìˆ˜);
 			Current2 = Current2->link;
 		}
 	}
 	while (Current1 != NULL && Current2 == NULL) {
-		insert_last(plist3, Current1->°è¼ö, Current1->Â÷¼ö);
+		insert_last(plist3, Current1->ê³„ìˆ˜, Current1->ì°¨ìˆ˜);
 		Current1 = Current1->link;
 	}
 	while (Current1 == NULL && Current2 != NULL) {
-		insert_last(plist3, Current2->°è¼ö, Current2->Â÷¼ö);
+		insert_last(plist3, Current2->ê³„ìˆ˜, Current2->ì°¨ìˆ˜);
 		Current2 = Current2->link;
 	}
 }
@@ -76,7 +77,7 @@ void print(ListType* plist) {
 	ListNode* Current = plist->head;
 
 	while (Current != NULL) {
-		printf("%dx^%d + ", Current->°è¼ö, Current->Â÷¼ö);
+		printf("%dx^%d + ", Current->ê³„ìˆ˜, Current->ì°¨ìˆ˜);
 		Current = Current->link;
 	}
 	printf("\n");
