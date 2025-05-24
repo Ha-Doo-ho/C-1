@@ -6,7 +6,7 @@
 #include<string.h>
 
 typedef struct {
-	char ´Ü¾î[30];
+	char ë‹¨ì–´[30];
 }english;
 
 typedef struct ListNode {
@@ -30,7 +30,7 @@ ListType* Create() {
 
 void insert_last(ListType* plist, english eng) {
 	ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
-	strcpy(newNode->eng.´Ü¾î, eng.´Ü¾î);
+	strcpy(newNode->eng.ë‹¨ì–´, eng.ë‹¨ì–´);
 	newNode->link = NULL;
 
 	if (plist->tail == NULL) {
@@ -47,7 +47,7 @@ void insert_last(ListType* plist, english eng) {
 void print(ListType* plist) {
 	ListNode* Current = plist->head;
 	while (Current != NULL) {
-		printf("%s->", Current->eng.´Ü¾î);
+		printf("%s->", Current->eng.ë‹¨ì–´);
 		Current = Current->link;
 	}
 	printf("NULL");
@@ -58,12 +58,12 @@ void print(ListType* plist) {
 int main(void) {
 	ListType* plist = Create();
 
-	printf("¸î°³ÀÇ ´Ü¾î¸¦ ³Ö°Ú½À´Ï±î?");
+	printf("ëª‡ê°œì˜ ë‹¨ì–´ë¥¼ ë„£ê² ìŠµë‹ˆê¹Œ?");
 	int num;
 	scanf("%d", &num);
 	while (num-- > 0) {
 		english eng;;
-		scanf("%s", eng.´Ü¾î);
+		scanf("%s", eng.ë‹¨ì–´);
 		insert_last(plist, eng);
 	}
 
