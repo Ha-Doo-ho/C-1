@@ -1,0 +1,78 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<stdbool.h>
+
+typedef struct ListNode{
+    char data[30];
+    struct ListNode* left,*right;
+}ListNode;
+
+void init(ListNode* phead){
+    phead->left = phead;
+    phead->right = phead;
+}
+
+void add(ListNode* phead, char* data){
+    ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
+    strcpy(newNode->data, data);
+    
+    ListNode* Current = phead->right;
+    while(Current != phead){
+        if(strcmp(Current->data,data) != 0){
+             Current = Current->right;        
+        }else{
+            printf("중복된 음악입니다.");
+            free(newNode); // 할당한 노드 메모리 반환
+            return;
+        }
+    }
+    newNode->right = Current;
+    newNode->left = Current->left;
+    Current->left->right = newNode;
+    Current->left = newNode;
+}
+
+ListNode* Current;
+
+void print(ListNode* phead) {
+    ListNode* p = phead->right;
+    while (p != phead) {
+        if (p == Current)
+            printf("<-| #%s# |-> ", p->data);
+        else
+            printf("<-| %s |-> ", p->data);
+        p = p->right;
+    }
+    printf("\n");
+}
+
+int main(){
+    char ch;
+    ListNode head;
+    init(&head);
+    
+    add(&head,"Mamamia");
+    add(&head,"Dancing Queen");
+    add(&head,"Desfacito");
+    
+    Current = head.right;
+    print(&head);
+    
+    do{
+        printf("\n명령어를 입력하시오(<,>,q): ");
+        ch = getchar();
+        if(ch == '<'){
+            Current = Current->left;
+            if(Current == &head)
+                Current = Current->left;
+        }
+        else if(ch == '>'){
+            Current = Current->right;
+            if(Current == &head)
+                Current = Current->right;
+        }
+        print(&head);
+        getchar();
+    }while(ch!= 'q');
+}
