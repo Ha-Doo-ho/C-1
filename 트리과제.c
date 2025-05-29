@@ -24,7 +24,7 @@ int SubTreeSum(TreeNode* root) {
 	int leftSum = SubTreeSum(root->left);
 	int rightSum = SubTreeSum(root->right);
 	total = root->data + leftSum + rightSum;
-	printf("%d¹ø ³ëµå¿Í ¼­ºêÆ®¸®³ëµå ÃÑÇÕ: %d\n", root->data, total);
+	printf("%dë²ˆ ë…¸ë“œì™€ ì„œë¸ŒíŠ¸ë¦¬ë…¸ë“œ ì´í•©: %d\n", root->data, total);
 	return total;
 }
 
@@ -33,46 +33,48 @@ void find(TreeNode* root,int n) {
 	
 	find(root->left,n);
 	if (root->data > n) {
-		printf("%dº¸´Ù Å« ³ëµå: %d\n", n, root->data);
+		printf("%dë³´ë‹¤ í° ë…¸ë“œ: %d\n", n, root->data);
 	}
 	find(root->right, n);
 }
 
 int Min(TreeNode* root) {
-	int ÃÖ¼Ò = 10000;
-	if (root == NULL) return ÃÖ¼Ò;
+	int ìµœì†Œ = 10000;
+	if (root == NULL) return ìµœì†Œ;
 	int ismin = min(root->data, min(Min(root->left), Min(root->right)));
 	return ismin;
 }
 
 int Max(TreeNode* root) {
-	int ÃÖ´ë = 0;
-	if (root == NULL) return ÃÖ´ë;
+	int ìµœëŒ€ = 0;
+	if (root == NULL) return ìµœëŒ€;
 	int ismax = max(root->data, max(Max(root->left), Max(root->right)));
 	return ismax;
 }
 
-int ÀÚ½Ä(TreeNode* root) {
-	int count = 0;
+int ìì‹1(TreeNode* root) {
 	if (root == NULL) return 0;
-	if (root->left != NULL && root->right != NULL) {
-		count = 1 + ÀÚ½Ä(root->left) + ÀÚ½Ä(root->right);
-		printf("³ëµå: %d\n", root->data);
+	int count = 0;
+	if (root->left != NULL && root->right == NULL || root->left == NULL && root->right != NULL) {
+		count = 1;
+		printf("ë…¸ë“œ: %d\n", root->data);
 	}
-	return count;
+	 // í•­ìƒ ì¢Œìš° ì„œë¸ŒíŠ¸ë¦¬ëŠ” íƒìƒ‰í•´ì•¼ í•¨!
+	return count + ìì‹1(root->left) + ìì‹1(root->right);
 }
 
-/*int ÀÚ½Ä2(TreeNode* root) {
-	int count = 0;
-	if (root == NULL) return 0;
-	if (root->left != NULL && root->right != NULL) {
-		count += 1;
-		ÀÚ½Ä(root->left);
-		ÀÚ½Ä(root->right);
-		printf("³ëµå: %d\n", root->data);
-	}
-	return count;
-}*/
+int ìì‹2(TreeNode* root) {
+    if (root == NULL) return 0;
+
+    int count = 0;
+    if (root->left != NULL && root->right != NULL) {
+        printf("ë…¸ë“œ: %d\n", root->data);
+        count = 1;
+    }
+
+    // í•­ìƒ ì¢Œìš° ì„œë¸ŒíŠ¸ë¦¬ëŠ” íƒìƒ‰í•´ì•¼ í•¨!
+    return count + ìì‹2(root->left) + ìì‹2(root->right);
+}
 
 int main() {
 	TreeNode n6 = {9,NULL,NULL};
@@ -83,15 +85,17 @@ int main() {
 	TreeNode n1 = {3,&n2,&n3};
 
 	int sum;
-	printf("¸ğµç ³ëµå °ªÀÇ ÃÑÇÕ: %d\n", TreeSum(&n1));
-	printf("°ªÀ» ÀÔ·ÂÇÏ½Ã¿À: ");
+	printf("ëª¨ë“  ë…¸ë“œ ê°’ì˜ ì´í•©: %d\n", TreeSum(&n1));
+	printf("ê°’ì„ ì…ë ¥í•˜ì‹œì˜¤: ");
 	int n;
 	scanf("%d", &n);
 	find(&n1, n);
-	printf("ÃÖ¼Ò°ª: %d\n", Min(&n1));
-	printf("ÃÖ´ë°ª: %d\n", Max(&n1));
-	printf("%d°³\n", ÀÚ½Ä(&n1));
-	//printf("%d°³\n", ÀÚ½Ä2(&n1));
-	printf(SubTreeSum(&n1));
+	printf("ìµœì†Œê°’: %d\n", Min(&n1));
+	printf("ìµœëŒ€ê°’: %d\n", Max(&n1));
+	printf("ìì‹ì´ 1ê°œì¸ ë…¸ë“œ\n");
+	printf("%dê°œ\n", ìì‹1(&n1));
+	printf("ìì‹ì´ 2ê°œì¸ ë…¸ë“œ\n");
+	printf("%dê°œ\n", ìì‹2(&n1));
+	printf("%d",SubTreeSum(&n1));
 
 }
