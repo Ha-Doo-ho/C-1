@@ -41,11 +41,11 @@ bool duplicate(ListNode* phead, Movie movie) {
 	ListNode* Current = phead->right;
 	while (Current != phead) {
 		if (strcmp(Current->movie.title, movie.title) == 0) {
-			return true; // Áßº¹µÊ
+			return true; // ì¤‘ë³µë¨
 		}
 		Current = Current->right;
 	}
-		return false; // Áßº¹µÇÁö ¾ÊÀ½
+		return false; // ì¤‘ë³µë˜ì§€ ì•ŠìŒ
 }
 
 void deleteNode(ListNode* phead, Movie movie) {
@@ -54,10 +54,10 @@ void deleteNode(ListNode* phead, Movie movie) {
 		Current = Current->right;
 	}
 	if (Current == phead) {
-		printf("ÇØ´ç ¿µÈ­°¡ ¾ø½À´Ï´Ù\n");
+		printf("í•´ë‹¹ ì˜í™”ê°€ ì—†ìŠµë‹ˆë‹¤\n");
 		return;
 	}
-	printf("%s ¿µÈ­¸¦ »èÁ¦ÇÕ´Ï´Ù.\n", Current->movie.title);
+	printf("%s ì˜í™”ë¥¼ ì‚­ì œí•©ë‹ˆë‹¤.\n", Current->movie.title);
 	Current->left->right = Current->right;
 	Current->right->left = Current->left;
 	free(Current);
@@ -98,55 +98,55 @@ int main()
 	init(&head);
 
 	while (true) {
-		printf("1.¿µÈ­ Ãß°¡ || 2.¿µÈ­ »èÁ¦ || 3.ÀüÃ¼ ¿µÈ­ ¸ñ·Ï Ãâ·Â || 4.Àå¸£·Î ¿µÈ­ °Ë»ö 5.°³ºÀ ¿¬µµ ±âÁØ ³»¸²Â÷¼ø Á¤·Ä Ãâ·Â 6.ÇÁ·Î±×·¥ Á¾·á");
+		printf("1.ì˜í™” ì¶”ê°€ || 2.ì˜í™” ì‚­ì œ || 3.ì „ì²´ ì˜í™” ëª©ë¡ ì¶œë ¥ || 4.ì¥ë¥´ë¡œ ì˜í™” ê²€ìƒ‰ 5.ê°œë´‰ ì—°ë„ ê¸°ì¤€ ë‚´ë¦¼ì°¨ìˆœ ì •ë ¬ ì¶œë ¥ 6.í”„ë¡œê·¸ë¨ ì¢…ë£Œ");
 		int choice;
 		scanf("%d", &choice);
 
 		if (choice == 1) {
 			Movie movie;
-			printf("¿µÈ­ Á¦¸ñ");
+			printf("ì˜í™” ì œëª©");
 			scanf("%s", movie.title);
-			printf("°³ºÀÀÏ");
+			printf("ê°œë´‰ì¼");
 			scanf("%d", &movie.year);
-			printf("Àå¸£");
-			scanf("%s", &movie.genre);
+			printf("ì¥ë¥´");
+			scanf("%s", movie.genre);
 			if (duplicate(&head, movie)) {
-				printf("¿µÈ­°¡ Áßº¹µÇ¾ú½À´Ï´Ù.\n");
+				printf("ì˜í™”ê°€ ì¤‘ë³µë˜ì—ˆìŠµë‹ˆë‹¤.\n");
 			}
 			else {
 				add(&head, movie);
-				printf("¿µÈ­°¡ Ãß°¡µÇ¾ú½À´Ï´Ù.\n");
+				printf("ì˜í™”ê°€ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤.\n");
 			}
 		}
 		else if (choice == 2) {
 			Movie movie;
-			printf("¿µÈ­ »èÁ¦\n");
-			printf("¾î¶² ¿µÈ­¸¦ »èÁ¦ÇÒ±î¿ä? : ");
+			printf("ì˜í™” ì‚­ì œ\n");
+			printf("ì–´ë–¤ ì˜í™”ë¥¼ ì‚­ì œí• ê¹Œìš”? : ");
 			scanf("%s", movie.title);
 			deleteNode(&head, movie);
 		}
 		else if (choice == 3) {
-			printf("¿µÈ­ ¸ñ·Ï\n");
+			printf("ì˜í™” ëª©ë¡\n");
 			Movie movie;
 			printNode(&head);
 		}
 		else if (choice == 4) {
 			Movie movie;
-			printf("Àå¸£·Î ¿µÈ­ °Ë»ö\n");
-			printf("°Ë»öÇÏ°í ½ÍÀº ¿µÈ­ÀÇ Àå¸£¸¦ ÀÔ·ÂÇÏ¼¼¿ä\n");
+			printf("ì¥ë¥´ë¡œ ì˜í™” ê²€ìƒ‰\n");
+			printf("ê²€ìƒ‰í•˜ê³  ì‹¶ì€ ì˜í™”ì˜ ì¥ë¥´ë¥¼ ì…ë ¥í•˜ì„¸ìš”\n");
 			scanf("%s", movie.genre);
 			searchGenre(&head, movie);
 		}
 		else if (choice == 5) {
-			printf("°³ºÀ ³âµµ ±âÁØ ³»¸²Â÷¼ø Á¤·Ä Ãâ·Â\n");
-			printf("¿µÈ­ ¸ñ·Ï\n");
+			printf("ê°œë´‰ ë…„ë„ ê¸°ì¤€ ë‚´ë¦¼ì°¨ìˆœ ì •ë ¬ ì¶œë ¥\n");
+			printf("ì˜í™” ëª©ë¡\n");
 			DownCaseSort(&head);
 		}
 		else if (choice == 6) {
 			break;
 		}
 		else {
-			printf("\n ´Ù½Ã ¼±ÅÃÇÏ¼¼¿ä");
+			printf("\n ë‹¤ì‹œ ì„ íƒí•˜ì„¸ìš”");
 		}
 	}
 	return 0;
