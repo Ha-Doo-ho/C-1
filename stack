@@ -1,0 +1,87 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct ListNode{
+    struct ListNode* link;
+    int data;
+}ListNode;
+
+typedef struct ListType{
+    ListNode* top;
+}ListType;
+
+/*void init(ListType* s){
+    s->top = NULL;
+}*/
+
+ListType* Create(){
+    ListType* s = (ListType*)malloc(sizeof(ListType));
+    s->top = NULL;
+    return s;
+}
+
+int is_Empty(ListType* s){
+    return s->top == NULL;
+}
+
+int is_full(ListType* s){
+    return 0;
+}
+
+void push(ListType* s, int data){
+    ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
+    newNode->data = data;
+
+   newNode->link = s->top;
+   s->top = newNode;
+}
+
+int pop(ListType* s){
+    if(is_Empty(s)){
+        fprintf(stderr,"팝연산이 불가함.\n");
+        exit(1);
+    }
+    else{
+        ListNode* temp = s->top;
+        int data = temp->data;
+        s->top = temp->link;    
+        free(temp);
+        return data;
+    }
+}
+
+void printStack(ListType* s){
+    ListNode* Current = s->top;
+    while(Current != NULL){
+        printf("%d ->", Current->data);
+        Current = Current ->link;
+    }
+    printf("\n");
+}
+
+
+
+
+int main(){
+    ListType* s  = Create();
+    //ListType s;
+    //init(s);
+
+    push(s,1);
+    printStack(s);
+    push(s,2);
+    printStack(s);
+    push(s,3);
+    printStack(s);
+    push(s,4);
+    printStack(s);
+    pop(s);
+    printStack(s);
+    pop(s);
+    printStack(s);
+    pop(s);
+    printStack(s);
+    
+    return 0;
+}
