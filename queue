@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct ListNode{
+    struct ListNode* link;
+    int data;
+}ListNode;
+
+typedef struct ListType{
+    ListNode* rear;
+    ListNode* front;
+}ListType;
+
+ListType* Create(){
+    ListType* q = (ListType*)malloc(sizeof(ListType));
+    q->rear = NULL;
+    q->front = NULL;
+    return q;
+}
+
+int is_Empty(ListType* q){
+    return q->front == NULL;
+}
+
+int is_Full(ListType* q){
+    return 0;
+}
+
+void enqueue(ListType* q, int data){
+    ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
+    newNode->data = data;
+    if(q->rear == NULL){
+        q->front = newNode;
+        q->rear = newNode;
+    }else{
+        q->rear->link = newNode;
+        q->rear = newNode;
+    }
+}
+
+int dequeue(ListType* q){
+    if(is_Empty(q)){
+        printf("더 이상 디큐가 불가능 합니다.\n");
+        return 0;
+    }else{
+        ListNode* temp = q->front;
+        int data = temp->data;
+        q->front = temp->link;
+        if(q->front == NULL){ // 디큐를 했는데 더이상 노드가 남아있지 않으면 rear은 쓰레기 값을 가지게 된다. 그러면 q->rear을 NULL을 해야 됨
+            q->rear = NULL; //시험나올부분
+        }
+        free(temp);
+        return data;
+    }
+    
+}
+
+
+void printQueue(ListType* q){
+    ListNode* Current = q->front;
+    while(Current != NULL){
+        printf("%d ->", Current->data);
+        Current = Current ->link;
+    }
+    printf("\n");
+}
+
+
+
+
+int main(){
+    ListType* q  = Create();
+    //ListType q;
+    //init(q);
+    
+    enqueue(q,1);
+    printQueue(q);
+    enqueue(q,2);
+    printQueue(q);
+    enqueue(q,3);
+    printQueue(q);
+    enqueue(q,4);
+    printQueue(q);
+    enqueue(q,5);
+    printQueue(q);
+
+    dequeue(q);
+    printQueue(q);
+    dequeue(q);
+    printQueue(q);
+    dequeue(q);
+    printQueue(q);
+    dequeue(q);
+    printQueue(q);
+    dequeue(q);
+    printQueue(q);
+    dequeue(q);
+    printQueue(q);
+    
+   
+    
+    
+    return 0;
+}
