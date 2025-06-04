@@ -1,0 +1,116 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct ListNode{
+    struct ListNode* link;
+    int data;
+}ListNode;
+
+typedef struct ListType{
+    ListNode* head;
+    ListNode* tail;
+    int size;
+}ListType;
+
+ListType* Create(){
+    ListType* plist = (ListType*)malloc(sizeof(ListType));
+    plist->head = NULL;
+    plist->tail = NULL;
+    return plist;
+}
+
+void insert_last(ListType* plist, int data){
+    ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
+    newNode->data = data;
+    newNode->link = NULL;
+
+    if(plist->tail == NULL){
+        plist->head = newNode;
+        plist->tail = newNode;
+    }
+    else{
+        plist->tail->link = newNode;
+        plist->tail = newNode;
+    }
+    plist->size++;
+}
+
+void print(ListType* plist){
+    ListNode* Current = plist->head;
+
+    if(Current == NULL){
+        printf("리스트가 비었습니다.\n");
+        return;
+    }
+    while(Current != NULL){
+        printf("%d->",Current->data);
+        Current = Current->link;
+    }
+    printf("\n");
+}
+
+void deleteNode(ListType* plist, int data){
+    ListNode* before = NULL;
+    ListNode* Current = plist->head;
+
+    if(Current == NULL){
+        printf("노드가 없습니다.\n"); // 아예 노드가 없음.
+        return;
+    }
+    while(Current != NULL){
+        if(Current->data == data){
+            if(Current == plist->head){
+                plist->head = Current->link;
+            }
+            else if(Current == plist->tail){
+                plist->tail = before;
+            }
+            else{
+                before->link = Current->link;
+            }
+            free(Current);
+            plist->size--;
+            return;
+        }
+        before = Current;
+        Current = Current->link;
+    }
+    
+}
+
+void concat(ListType* plist1, ListType* plist2){
+  
+    ListNode* Current = plist1->head;
+    while(Current != plist1->tail){
+        Current = Current->link;
+    }
+    Current->link = plist2->head;
+    plist1->tail = plist2->tail;
+}
+
+int main(void){
+    ListType* plist1 = Create();
+    ListType* plist2 = Create();
+
+    insert_last(plist1, 1);
+    insert_last(plist1, 2);
+    insert_last(plist1, 3);
+    insert_last(plist1, 4);
+
+    insert_last(plist2, 5);
+    insert_last(plist2, 6);
+    insert_last(plist2, 7);
+    insert_last(plist2, 8);
+
+
+    print(plist1);
+    print(plist2);
+
+    concat(plist1, plist2);
+    print(plist1);
+    deleteNode(plist1, 6);
+    print(plist1);
+    
+    return 0;
+}
